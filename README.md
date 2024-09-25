@@ -1,2 +1,2 @@
 # BMI-Calculator
-This project involves creating an interactive Java program that calculates a user's Body Mass Index (BMI) based on their height and weight.
+This project involves creating an interactive Java program that calculates a user's Body Mass Index (BMI) based on their height and weight. The program will prompt users to input their name, height (in meters), weight (in kilograms), and a weight range. It will then compute the user's BMI and display a detailed BMI category chart. Additionally, the program will generate a table showing BMI values for different weights within the provided range. The program is designed with modularity, featuring distinct methods for user input, BMI calculation, and result presentation, ensuring clarity and ease of use.
