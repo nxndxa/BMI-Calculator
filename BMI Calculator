@@ -1,0 +1,128 @@
+import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class BMI_CSC215_English_NandhaSankar {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        displayWelcomeMessage();
+
+        String fullName = getUserName(scanner);
+        int[] height = getUserHeight(scanner);
+        double weight = getUserWeight(scanner);
+
+        displaySummaryReport(fullName, height, weight);
+
+        double lowWeight = getLowWeight(scanner);
+        double highWeight = getHighWeight(scanner);
+
+        displayBMIRange(height, lowWeight, highWeight);
+
+        displayEndingMessage(fullName);
+        scanner.close();
+    }
+
+    public static void displayWelcomeMessage() {
+        String dashes = "-";
+        dashes = dashes.repeat(90);
+        System.out.println(dashes);
+        System.out.println(String.format("-- Welcome to:%76s", ""));
+        System.out.println(String.format("-- %11s Body Mass Index (BMI) Calculator, CSC 215, English!", ""));
+        System.out.println(String.format("-- %63sBy Nandha Sankar", ""));
+        System.out.println(dashes);
+    }
+
+    public static String getUserName(Scanner scanner) {
+        System.out.print("Please enter your full name: ");
+        return scanner.nextLine();
+    }
+
+    public static int[] getUserHeight(Scanner scanner) {
+        System.out.print("Please enter your height in feet and inches (e.g., 5 10 for 5 feet 10 inches): ");
+        int feet = scanner.nextInt();
+        int inches = scanner.nextInt();
+        int[] height = {feet, inches};
+        return height;
+    }
+
+    public static double getUserWeight(Scanner scanner) {
+        System.out.print("Please enter your weight in pounds ");
+        return scanner.nextDouble();
+    }
+
+    public static void displaySummaryReport(String fullName, int[] height, double weight) {
+        double bmi = calculateBMI(height, weight);
+        String weightStatus = getWeightStatus(bmi);
+        System.out.println("\n-- SUMMARY REPORT for " + fullName);
+        System.out.println("-- Date and time: " + getCurrentDateTime());
+        System.out.println("-- BMI:           " + String.format("%-10.2f", bmi));
+        System.out.println("-- Weight Status: " + weightStatus);
+    }
+
+    public static double getLowWeight(Scanner scanner) {
+        System.out.print("\nEnter the lower end of weight range in pounds: ");
+        return scanner.nextDouble();
+    }
+
+    public static double getHighWeight(Scanner scanner) {
+        System.out.print("Enter the upper end of weight range in pounds: ");
+        return scanner.nextDouble();
+    }
+
+    public static void displayBMIRange(int[] height, double lowWeight, double highWeight) {
+        System.out.println("\nBMI RANGE");
+        System.out.println("---------------------------------------------");
+        System.out.println("| Weight     | BMI        |  WEIGHT STATUS  |");
+        System.out.println("---------------------------------------------");
+
+        for (double weight = lowWeight; weight <= highWeight; weight += 5) {
+            double bmi = calculateBMI(height, weight);
+            String weightStatus = getWeightStatus(bmi);
+            System.out.printf("| %-10.2f | %-10.2f | %-15s |%n", weight, bmi, weightStatus);
+        }
+    }
+
+    public static double calculateBMI(int[] height, double weight) {
+        double heightInInches = height[0] * 12 + height[1];
+        return (weight / (heightInInches * heightInInches)) * 703;
+    }
+
+    public static String getWeightStatus(double bmi) {
+        if (bmi < 18.5) {
+            return "Underweight";
+        } else if (bmi < 25) {
+            return "Healthy Weight";
+        } else if (bmi < 30) {
+            return "Overweight";
+        } else {
+            return "Obesity";
+        }
+    }
+    public static String getCurrentDateTime() {
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy 'at' hh:mm:ss a");
+        return dateTime.format(formatter);
+    }
+    public static void displayEndingMessage(String fullName) {
+        String dashes = "-";
+        String line = "-".repeat(45);
+        dashes = dashes.repeat(90);
+        System.out.println(line);
+        System.out.println("\nThe SFSU Mashouf Wellness Center is at 755 font Blvd");
+        System.out.println(dashes);
+        System.out.println("-- Thank you for using my program, " + fullName + " !");
+        if (fullName.equalsIgnoreCase("minnie mouse")) {
+            System.out.println("-- Ear-eristible");
+        } else if (fullName.equalsIgnoreCase("Otto Minion")) {
+            System.out.println("-- Poopaye!!!");
+        } else if (fullName.equalsIgnoreCase("Baymax Hamada")){
+            System.out.println("-- Sayonara!!!");
+        }else{
+            System.out.println("-- THANK YOU THANK YOU");
+        }
+
+
+        System.out.println(dashes);
+    }
+}
